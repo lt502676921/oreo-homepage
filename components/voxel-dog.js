@@ -12,7 +12,18 @@ const VoxelDog = () => {
   const refContainer = useRef()
   const [loading, setLoading] = useState(true)
   const refRenderer = useRef()
-  const urlDogGLB = '/dog.glb'
+  // const urlDogGLB = '/dog.glb'
+  const GLBUrls = [
+    'Lynkco09_EXT_d.glb',
+    'Lynkco09_INT_d.glb',
+    'Lynkco09_Sunproof_d.glb',
+    'Lynkco09_Trunk_d.glb',
+    'Lynkco09_Tires_d.glb',
+    'Lynkco09_LBDoor_d.glb',
+    'Lynkco09_LFDoor_d.glb',
+    'Lynkco09_RFDoor_d.glb',
+    'Lynkco09_RBDoor_d.glb'
+  ]
 
   const handleWindowResize = useCallback(() => {
     const { current: renderer } = refRenderer
@@ -71,13 +82,56 @@ const VoxelDog = () => {
       controls.autoRotate = true
       controls.target = target
 
-      loadGLTFModel(scene, urlDogGLB, {
-        receiveShadow: false,
-        castShadow: false
-      }).then(() => {
+      // 添加灯光
+      const light1 = new THREE.DirectionalLight(0xffffff, 1)
+      light1.position.set(0, 0, 10)
+      scene.add(light1)
+      const light2 = new THREE.DirectionalLight(0xffffff, 1)
+      light1.position.set(0, 0, -10)
+      scene.add(light2)
+      const light3 = new THREE.DirectionalLight(0xffffff, 1)
+      light1.position.set(10, 0, 0)
+      scene.add(light3)
+      const light4 = new THREE.DirectionalLight(0xffffff, 1)
+      light1.position.set(-10, 0, 0)
+      scene.add(light4)
+      const light5 = new THREE.DirectionalLight(0xffffff, 1)
+      light1.position.set(0, 10, 0)
+      scene.add(light5)
+      const light6 = new THREE.DirectionalLight(0xffffff, 0.3)
+      light1.position.set(5, 10, 0)
+      scene.add(light6)
+      const light7 = new THREE.DirectionalLight(0xffffff, 0.3)
+      light1.position.set(0, 10, 5)
+      scene.add(light7)
+      const light8 = new THREE.DirectionalLight(0xffffff, 0.3)
+      light1.position.set(0, 10, -5)
+      scene.add(light8)
+      const light9 = new THREE.DirectionalLight(0xffffff, 0.3)
+      light1.position.set(-5, 10, 0)
+      scene.add(light9)
+
+      let loadPromises = []
+      for (let i = 0; i < GLBUrls.length; i++) {
+        loadPromises.push(
+          loadGLTFModel(scene, GLBUrls[i], {
+            receiveShadow: false,
+            castShadow: false
+          })
+        )
+      }
+      Promise.all(loadPromises).then(() => {
         animate()
         setLoading(false)
       })
+
+      // loadGLTFModel(scene, urlDogGLB, {
+      //   receiveShadow: false,
+      //   castShadow: false
+      // }).then(() => {
+      //   animate()
+      //   setLoading(false)
+      // })
 
       let req = null
       let frame = 0
