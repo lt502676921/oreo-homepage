@@ -120,9 +120,41 @@ const VoxelDog = () => {
           })
         )
       }
-      Promise.all(loadPromises).then(() => {
+      Promise.all(loadPromises).then(res => {
+        console.log('res', res)
         animate()
         setLoading(false)
+        // 拾取对象
+
+        function pickupObjects(event) {
+          // 点击屏幕创建一个向量
+          var raycaster = new THREE.Raycaster()
+          var c = document.getElementsByTagName('canvas')[0]
+          // 将鼠标点击位置的屏幕坐标转成threejs中的标准坐标
+          var vector = new THREE.Vector3(
+            ((event.clientX - c.getBoundingClientRect().left) / c.offsetWidth) *
+              2 -
+              1,
+            -(
+              (event.clientY - c.getBoundingClientRect().top) /
+              c.offsetHeight
+            ) *
+              2 +
+              1,
+            1
+          ) // 标准设备坐标
+          // 标准设备坐标转世界坐标
+          let worldVector = vector.unproject(camera)
+          // 射线投射方向单位向量(worldVector坐标减相机位置坐标)
+          let ray = worldVector.sub(camera.position).normalize()
+          raycaster = new THREE.Raycaster(camera.position, ray)
+          // 从相机发射一条射线，经过鼠标点击位置
+          // raycaster.setFromCamera(vector, camera)
+          // 设置要获取的相交对象（数组）
+          let intersects = raycaster.intersectObjects(scene.children, true)
+          console.log(intersects)
+        }
+        document.addEventListener('click', pickupObjects, false) //监听单击拾取对象初始化球体
       })
 
       // loadGLTFModel(scene, urlDogGLB, {
