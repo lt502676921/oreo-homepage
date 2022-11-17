@@ -17,6 +17,7 @@
     "@chakra-ui/react": "^2.3.7",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@tweenjs/tween.js": "^18.6.4",
     "framer-motion": "^7.6.5",
     "next": "^13.0.2",
     "react": "^18.2.0",

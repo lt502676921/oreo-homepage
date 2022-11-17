@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import * as THREE from 'three'
+import * as TWEEN from '@tweenjs/tween.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { loadGLTFModel } from '../lib/model'
 import { DogSpinner, DogContainer } from './voxel-dog-loader'
@@ -79,7 +80,7 @@ const VoxelDog = () => {
       scene.add(ambientLight)
 
       const controls = new OrbitControls(camera, renderer.domElement)
-      controls.autoRotate = true
+      // controls.autoRotate = true
       controls.target = target
 
       // 添加灯光
@@ -87,28 +88,28 @@ const VoxelDog = () => {
       light1.position.set(0, 0, 10)
       scene.add(light1)
       const light2 = new THREE.DirectionalLight(0xffffff, 1)
-      light1.position.set(0, 0, -10)
+      light2.position.set(0, 0, -10)
       scene.add(light2)
       const light3 = new THREE.DirectionalLight(0xffffff, 1)
-      light1.position.set(10, 0, 0)
+      light3.position.set(10, 0, 0)
       scene.add(light3)
       const light4 = new THREE.DirectionalLight(0xffffff, 1)
-      light1.position.set(-10, 0, 0)
+      light4.position.set(-10, 0, 0)
       scene.add(light4)
       const light5 = new THREE.DirectionalLight(0xffffff, 1)
-      light1.position.set(0, 10, 0)
+      light5.position.set(0, 10, 0)
       scene.add(light5)
       const light6 = new THREE.DirectionalLight(0xffffff, 0.3)
-      light1.position.set(5, 10, 0)
+      light6.position.set(5, 10, 0)
       scene.add(light6)
       const light7 = new THREE.DirectionalLight(0xffffff, 0.3)
-      light1.position.set(0, 10, 5)
+      light7.position.set(0, 10, 5)
       scene.add(light7)
       const light8 = new THREE.DirectionalLight(0xffffff, 0.3)
-      light1.position.set(0, 10, -5)
+      light8.position.set(0, 10, -5)
       scene.add(light8)
       const light9 = new THREE.DirectionalLight(0xffffff, 0.3)
-      light1.position.set(-5, 10, 0)
+      light9.position.set(-5, 10, 0)
       scene.add(light9)
 
       let loadPromises = []
@@ -120,12 +121,31 @@ const VoxelDog = () => {
           })
         )
       }
-      Promise.all(loadPromises).then(res => {
-        console.log('res', res)
+      Promise.all(loadPromises).then(models => {
         animate()
         setLoading(false)
-        // 拾取对象
 
+        function setupTweenDoor(source, target, mesh) {
+          const carTween = new TWEEN.Tween(source)
+            .to(target, 2000)
+            .easing(TWEEN.Easing.Quadratic.Out)
+          carTween.onUpdate(function (that) {
+            mesh.rotation.y = that.y
+          })
+          carTween.start()
+          TWEEN.update()
+        }
+
+        function carOpen(door, doors) {
+          if (door.doorStatus == 'close') {
+            door.doorStatus = 'open'
+            for (let i = 0; i < doors.length; i++) {
+              setupTweenDoor({ y: 0 }, { y: Math.PI * -0.8 }, doors[i])
+            }
+          }
+        }
+
+        // 拾取对象
         function pickupObjects(event) {
           // 点击屏幕创建一个向量
           var raycaster = new THREE.Raycaster()
@@ -152,7 +172,16 @@ const VoxelDog = () => {
           // raycaster.setFromCamera(vector, camera)
           // 设置要获取的相交对象（数组）
           let intersects = raycaster.intersectObjects(scene.children, true)
-          console.log(intersects)
+          // console.log(intersects)
+          let door = models.find(item => item.name == 'LBDoor')
+          console.log(door)
+          let doors = []
+          door.traverse(function (v) {
+            if (v.name.includes('LBDoor')) {
+              doors.push(v)
+            }
+          })
+          carOpen(door, doors)
         }
         document.addEventListener('click', pickupObjects, false) //监听单击拾取对象初始化球体
       })
