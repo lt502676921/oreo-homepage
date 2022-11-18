@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import * as THREE from 'three'
 import * as TWEEN from '@tweenjs/tween.js'
+import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { loadGLTFModel } from '../lib/model'
 import { DogSpinner, DogContainer } from './voxel-dog-loader'
@@ -130,7 +131,9 @@ const VoxelDog = () => {
             .to(target, 2000)
             .easing(TWEEN.Easing.Quadratic.Out)
           carTween.onUpdate(function (that) {
-            mesh.rotation.y = that.y
+            // console.log('that', that.y)
+            // console.log('mesh.rotation', mesh.rotation)
+            // mesh.rotation.y = that.y
           })
           carTween.start()
           TWEEN.update()
@@ -147,8 +150,6 @@ const VoxelDog = () => {
 
         // 拾取对象
         function pickupObjects(event) {
-          // 点击屏幕创建一个向量
-          var raycaster = new THREE.Raycaster()
           var c = document.getElementsByTagName('canvas')[0]
           // 将鼠标点击位置的屏幕坐标转成threejs中的标准坐标
           var vector = new THREE.Vector3(
@@ -161,27 +162,68 @@ const VoxelDog = () => {
             ) *
               2 +
               1,
-            1
+            0.5
           ) // 标准设备坐标
           // 标准设备坐标转世界坐标
-          let worldVector = vector.unproject(camera)
+          var worldVector = vector.unproject(camera)
           // 射线投射方向单位向量(worldVector坐标减相机位置坐标)
-          let ray = worldVector.sub(camera.position).normalize()
-          raycaster = new THREE.Raycaster(camera.position, ray)
-          // 从相机发射一条射线，经过鼠标点击位置
-          // raycaster.setFromCamera(vector, camera)
+          var ray = worldVector.sub(camera.position).normalize()
+
+          // 点击屏幕创建一个向量
+          var raycaster = new THREE.Raycaster(camera.position, ray)
+
+          // var x = (event.clientX / window.innerWidth) * 2 - 1
+          // var y = -(event.clientY / window.innerHeight) * 2 + 1
+          // var standardVector = new THREE.Vector3(x, y, 0.5)
+          // var worldVector = standardVector.unproject(camera)
+          // var ray = worldVector.sub(camera.position).normalize()
+          // var raycaster = new THREE.Raycaster(camera.position, ray)
+
           // 设置要获取的相交对象（数组）
-          let intersects = raycaster.intersectObjects(scene.children, true)
-          // console.log(intersects)
+          let intersectObjects = scene.children.filter(item =>
+            item.name.includes('Door')
+          )
+
+          let intersects = raycaster.intersectObjects(intersectObjects, false)
+          console.log(intersects)
+          if (intersects.length > 0) {
+            // console.log(intersects[0])
+            intersects[0].object.material.transparent = true
+            intersects[0].object.material.opacity = 0.6
+          }
           let door = models.find(item => item.name == 'LBDoor')
-          console.log(door)
-          let doors = []
-          door.traverse(function (v) {
-            if (v.name.includes('LBDoor')) {
-              doors.push(v)
-            }
+          console.log('door', door)
+          let geometrys = []
+          door.traverse(item => {
+            geometrys.push(item)
+            // if (item.geometry) {
+            //   let tempAttrArr = []
+            //   for (let key in item.geometry.attributes) {
+            //     tempAttrArr.push(item.geometry.attributes[key])
+            //   }
+            //   console.log()
+            //   let temp = BufferGeometryUtils.mergeBufferAttributes(tempAttrArr)
+            //   console.log('temppppppp', temp)
+            //   geometrys.push(item.geometry)
+            // }
           })
-          carOpen(door, doors)
+          console.log(geometrys)
+          // const mergedGeometries = BufferGeometryUtils.mergeBufferAttributes(
+          //   geometrys,
+          //   true
+          // )
+          // const mergedGeometries = BufferGeometryUtils.mergeBufferGeometries(
+          //   geometrys,
+          //   true
+          // )
+          // console.log('mergedGeometries', mergedGeometries)
+          // let doors = []
+          // door.traverse(function (v) {
+          //   if (v.name.includes('LBDoor')) {
+          //     doors.push(v)
+          //   }
+          // })
+          // carOpen(door, doors)
         }
         document.addEventListener('click', pickupObjects, false) //监听单击拾取对象初始化球体
       })
@@ -199,21 +241,21 @@ const VoxelDog = () => {
       const animate = () => {
         req = requestAnimationFrame(animate)
 
-        frame = frame <= 100 ? frame + 1 : frame
+        // frame = frame <= 100 ? frame + 1 : frame
 
-        if (frame <= 100) {
-          const p = initialCameraPosition
-          const rotSpeed = -easeOutCirc(frame / 120) * Math.PI * 20
+        // if (frame <= 100) {
+        //   const p = initialCameraPosition
+        //   const rotSpeed = -easeOutCirc(frame / 120) * Math.PI * 20
 
-          camera.position.y = 10
-          camera.position.x =
-            p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed)
-          camera.position.z =
-            p.z * Math.cos(rotSpeed) - p.x * Math.sin(rotSpeed)
-          camera.lookAt(target)
-        } else {
-          controls.update()
-        }
+        //   camera.position.y = 10
+        //   camera.position.x =
+        //     p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed)
+        //   camera.position.z =
+        //     p.z * Math.cos(rotSpeed) - p.x * Math.sin(rotSpeed)
+        //   camera.lookAt(target)
+        // } else {
+        //   controls.update()
+        // }
 
         renderer.render(scene, camera)
       }
