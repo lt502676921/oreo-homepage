@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { Box, Spinner } from '@chakra-ui/react'
 
-export const DogSpinner = () => (
+export const CarSpinner = () => (
   <Spinner
     size="xl"
     position="absolute"
@@ -12,10 +12,10 @@ export const DogSpinner = () => (
   />
 )
 
-export const DogContainer = forwardRef(({ children }, ref) => (
+export const CarContainer = forwardRef(({ children }, ref) => (
   <Box
     ref={ref}
-    className="voxel-dog"
+    className="lynkco09"
     m="auto"
     mt={['-20px', '-60px', '-120px']}
     mb={['-40px', '-140px', '-200px']}
@@ -29,9 +29,9 @@ export const DogContainer = forwardRef(({ children }, ref) => (
 
 const Loader = () => {
   return (
-    <DogContainer>
-      <DogSpinner />
-    </DogContainer>
+    <CarContainer>
+      <CarSpinner />
+    </CarContainer>
   )
 }
 
