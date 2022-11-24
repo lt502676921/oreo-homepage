@@ -12,31 +12,26 @@ let tweenCollection = {
   LBDoor: {
     tween: null,
     from: { value: null },
-    lastLocation: { value: null },
     to: { value: null }
   },
   RBDoor: {
     tween: null,
     from: { value: null },
-    lastLocation: { value: null },
     to: { value: null }
   },
   LFDoor: {
     tween: null,
     from: { value: null },
-    lastLocation: { value: null },
     to: { value: null }
   },
   RFDoor: {
     tween: null,
     from: { value: null },
-    lastLocation: { value: null },
     to: { value: null }
   },
   Trunk: {
     tween: null,
     from: { value: null },
-    lastLocation: { value: null },
     to: { value: null }
   }
 }
@@ -51,15 +46,15 @@ const Lynkco09 = () => {
   const refRenderer = useRef()
   // const urlDogGLB = '/dog.glb'
   const GLBUrls = [
-    'Lynkco09_EXT_d.glb',
-    'Lynkco09_INT_d.glb',
-    'Lynkco09_Sunproof_d.glb',
-    'Lynkco09_Trunk_d.glb',
-    'Lynkco09_Tires_d.glb',
-    'Lynkco09_LBDoor_d.glb',
-    'Lynkco09_LFDoor_d.glb',
-    'Lynkco09_RFDoor_d.glb',
-    'Lynkco09_RBDoor_d.glb'
+    '/data/lynkco09/Lynkco09_EXT_d.glb',
+    '/data/lynkco09/Lynkco09_INT_d.glb',
+    '/data/lynkco09/Lynkco09_Sunproof_d.glb',
+    '/data/lynkco09/Lynkco09_Trunk_d.glb',
+    '/data/lynkco09/Lynkco09_Tires_d.glb',
+    '/data/lynkco09/Lynkco09_LBDoor_d.glb',
+    '/data/lynkco09/Lynkco09_LFDoor_d.glb',
+    '/data/lynkco09/Lynkco09_RFDoor_d.glb',
+    '/data/lynkco09/Lynkco09_RBDoor_d.glb'
   ]
 
   const handleWindowResize = useCallback(() => {
@@ -114,49 +109,30 @@ const Lynkco09 = () => {
       door.status = 'open'
     }
     // TWEEN.removeAll()
+    let lastLocation = null
     if (tweenCollection[door.name].tween) {
+      lastLocation = { value: tweenCollection[door.name].from.value }
       tweenCollection[door.name].tween.stop()
-      tweenCollection[door.name].from = tweenCollection[door.name].lastLocation
-      tweenCollection[door.name].tween = new TWEEN.Tween(
-        tweenCollection[door.name].from
-      )
-        .to(to, 1000)
-        .easing(TWEEN.Easing.Cubic.InOut)
-        .onUpdate(function () {
-          door.outer.rotation[door.rotateDirection.rotateAxis] =
-            THREE.MathUtils.degToRad(tweenCollection[door.name].from.value)
-          tweenCollection[door.name].lastLocation = {
-            value: tweenCollection[door.name].from.value
-          }
-        })
-        .onComplete(() => {
-          tweenCollection[door.name] = {
-            tween: null,
-            from: { value: null },
-            lastLocation: { value: null },
-            to: { value: null }
-          }
-        })
-        .start()
     } else {
-      tweenCollection[door.name].tween = new TWEEN.Tween(from)
-        .to(to, 2000)
-        .easing(TWEEN.Easing.Cubic.InOut)
-        .onUpdate(function () {
-          door.outer.rotation[door.rotateDirection.rotateAxis] =
-            THREE.MathUtils.degToRad(from.value)
-          tweenCollection[door.name].lastLocation = { value: from.value }
-        })
-        .onComplete(() => {
-          tweenCollection[door.name] = {
-            tween: null,
-            from: { value: null },
-            lastLocation: { value: null },
-            to: { value: null }
-          }
-        })
-        .start()
+      lastLocation = { value: from.value }
     }
+    tweenCollection[door.name].tween = new TWEEN.Tween(lastLocation)
+      .to(to, 1000)
+      .easing(TWEEN.Easing.Cubic.InOut)
+      .onUpdate(function (lastLocation) {
+        door.outer.rotation[door.rotateDirection.rotateAxis] =
+          THREE.MathUtils.degToRad(lastLocation.value)
+        console.log(lastLocation.value)
+        tweenCollection[door.name].from.value = lastLocation.value
+      })
+      .onComplete(() => {
+        tweenCollection[door.name] = {
+          tween: null,
+          from: { value: null },
+          to: { value: null }
+        }
+      })
+      .start()
   }
 
   /* eslint-disable react-hooks/exhaustive-deps */
@@ -202,7 +178,7 @@ const Lynkco09 = () => {
       scene.add(ambientLight)
 
       const controls = new OrbitControls(camera, renderer.domElement)
-      // controls.autoRotate = true
+      controls.autoRotate = true
       controls.target = target
 
       // 添加灯光
@@ -234,16 +210,14 @@ const Lynkco09 = () => {
       light9.position.set(-5, 10, 0)
       scene.add(light9)
 
-      let loadPromises = []
-      for (let i = 0; i < GLBUrls.length; i++) {
-        loadPromises.push(
-          loadGLTFModel(scene, GLBUrls[i], {
+      Promise.all(
+        GLBUrls.map(item =>
+          loadGLTFModel(scene, item, {
             receiveShadow: false,
             castShadow: false
           })
         )
-      }
-      Promise.all(loadPromises).then(res => {
+      ).then(res => {
         models = res
         animate()
         setLoading(false)
