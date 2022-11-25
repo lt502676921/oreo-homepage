@@ -183,7 +183,8 @@ const Lynkco09 = () => {
       // const axesHelper = new THREE.AxesHelper(5)
       // scene.add(axesHelper)
 
-      const target = new THREE.Vector3(-0.5, 1.2, 0)
+      // const target = new THREE.Vector3(-0.5, 1.2, 0)
+      const target = new THREE.Vector3(-0.5, 0.5, 0)
       const initialCameraPosition = new THREE.Vector3(
         20 * Math.sin(0.2 * Math.PI),
         10,
@@ -205,39 +206,41 @@ const Lynkco09 = () => {
       camera.position.copy(initialCameraPosition)
       camera.lookAt(target)
 
-      const ambientLight = new THREE.AmbientLight(0xcccccc, 1)
-      scene.add(ambientLight)
+      // 环境光
+      // const ambientLight = new THREE.AmbientLight(0xcccccc, 1)
+      // scene.add(ambientLight)
 
       controls = new OrbitControls(camera, renderer.domElement)
       controls.autoRotate = true
       controls.target = target
 
       // 添加灯光
-      const light1 = new THREE.DirectionalLight(0xffffff, 1)
+      const light1 = new THREE.DirectionalLight(0xffffff, 0.2)
       light1.position.set(0, 0, 10)
       scene.add(light1)
-      const light2 = new THREE.DirectionalLight(0xffffff, 1)
+      const light2 = new THREE.DirectionalLight(0xffffff, 0.2)
       light2.position.set(0, 0, -10)
       scene.add(light2)
-      const light3 = new THREE.DirectionalLight(0xffffff, 1)
+      const light3 = new THREE.DirectionalLight(0xffffff, 0.2)
       light3.position.set(10, 0, 0)
       scene.add(light3)
-      const light4 = new THREE.DirectionalLight(0xffffff, 1)
+      const light4 = new THREE.DirectionalLight(0xffffff, 0.2)
       light4.position.set(-10, 0, 0)
       scene.add(light4)
-      const light5 = new THREE.DirectionalLight(0xffffff, 1)
+
+      const light5 = new THREE.DirectionalLight(0xffffff, 0.2)
       light5.position.set(0, 10, 0)
       scene.add(light5)
-      const light6 = new THREE.DirectionalLight(0xffffff, 0.3)
+      const light6 = new THREE.DirectionalLight(0xffffff, 0.2)
       light6.position.set(5, 10, 0)
       scene.add(light6)
-      const light7 = new THREE.DirectionalLight(0xffffff, 0.3)
+      const light7 = new THREE.DirectionalLight(0xffffff, 0.2)
       light7.position.set(0, 10, 5)
       scene.add(light7)
-      const light8 = new THREE.DirectionalLight(0xffffff, 0.3)
+      const light8 = new THREE.DirectionalLight(0xffffff, 0.2)
       light8.position.set(0, 10, -5)
       scene.add(light8)
-      const light9 = new THREE.DirectionalLight(0xffffff, 0.3)
+      const light9 = new THREE.DirectionalLight(0xffffff, 0.2)
       light9.position.set(-5, 10, 0)
       scene.add(light9)
 
