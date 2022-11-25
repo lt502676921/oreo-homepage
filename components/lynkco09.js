@@ -98,6 +98,7 @@ const Lynkco09 = () => {
           }
         }
         if (intersects[0].object.name.includes('INT')) {
+          controls.autoRotate = false
           let INT = models.find(item => item.name === 'INT')
           setupTweenCarIn(INT)
         }
@@ -127,7 +128,6 @@ const Lynkco09 = () => {
       .onUpdate(function (lastLocation) {
         door.outer.rotation[door.rotateDirection.rotateAxis] =
           THREE.MathUtils.degToRad(lastLocation.value)
-        console.log(lastLocation.value)
         tweenCollection[door.name].from.value = lastLocation.value
       })
       .onComplete(() => {
