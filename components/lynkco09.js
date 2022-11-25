@@ -5,6 +5,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { loadGLTFModel } from '../lib/model'
 import { CarSpinner, CarContainer } from './lynkco09-loader'
 
+let controls = null
 let camera = null
 let scene = null
 let models = []
@@ -96,6 +97,10 @@ const Lynkco09 = () => {
             setupTweenDoor(door, door.status)
           }
         }
+        if (intersects[0].object.name.includes('INT')) {
+          let INT = models.find(item => item.name === 'INT')
+          setupTweenCarIn(INT)
+        }
       }
     }
   }, [])
@@ -135,6 +140,27 @@ const Lynkco09 = () => {
       .start()
   }
 
+  const setupTweenCarIn = model => {
+    const { x: cx, y: cy, z: cz } = camera.position
+    const { x: tocx, y: tocy, z: tocz } = model.carInCameraPosition
+
+    setupTweenCamera(
+      { cx, cy, cz, ox: 0, oy: 0, oz: 0 },
+      { cx: tocx, cy: tocy, cz: tocz, ox: 0, oy: tocy, oz: 0.1 }
+    )
+
+    function setupTweenCamera(source, target) {
+      const carTween = new TWEEN.Tween(source)
+        .to(target, 2000)
+        .easing(TWEEN.Easing.Quadratic.Out)
+      carTween.onUpdate(function (that) {
+        camera.position.set(that.cx, that.cy, that.cz)
+        controls.target.set(that.ox, that.oy, that.oz)
+      })
+      carTween.start()
+    }
+  }
+
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const { current: container } = refContainer
@@ -153,6 +179,10 @@ const Lynkco09 = () => {
       refRenderer.current = renderer
       scene = new THREE.Scene()
 
+      // 坐标系
+      // const axesHelper = new THREE.AxesHelper(5)
+      // scene.add(axesHelper)
+
       const target = new THREE.Vector3(-0.5, 1.2, 0)
       const initialCameraPosition = new THREE.Vector3(
         20 * Math.sin(0.2 * Math.PI),
@@ -162,22 +192,23 @@ const Lynkco09 = () => {
 
       // 640 -> 240
       // 8   -> 6
-      const scale = scH * 0.005 + 4.8
-      camera = new THREE.OrthographicCamera(
-        -scale,
-        scale,
-        scale,
-        -scale,
-        0.01,
-        50000
-      )
+      // const scale = scH * 0.005 + 4.8
+      // camera = new THREE.OrthographicCamera(
+      //   -scale,
+      //   scale,
+      //   scale,
+      //   -scale,
+      //   0.01,
+      //   50000
+      // )
+      camera = new THREE.PerspectiveCamera(75, scW / scH, 0.1, 1000)
       camera.position.copy(initialCameraPosition)
       camera.lookAt(target)
 
       const ambientLight = new THREE.AmbientLight(0xcccccc, 1)
       scene.add(ambientLight)
 
-      const controls = new OrbitControls(camera, renderer.domElement)
+      controls = new OrbitControls(camera, renderer.domElement)
       controls.autoRotate = true
       controls.target = target
 
