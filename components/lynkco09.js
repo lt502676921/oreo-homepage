@@ -5,6 +5,86 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { loadGLTFModel } from '../lib/model'
 import { CarSpinner, CarContainer } from './lynkco09-loader'
 
+let GLBs = [
+  {
+    name: 'EXT',
+    path: '/data/lynkco09/model/Lynkco09_EXT_d.glb'
+  },
+  {
+    name: 'INT',
+    path: '/data/lynkco09/model/Lynkco09_INT_d.glb'
+  },
+  {
+    name: 'Sunproof',
+    path: '/data/lynkco09/model/Lynkco09_Sunproof_d.glb'
+  },
+  {
+    name: 'Trunk',
+    path: '/data/lynkco09/model/Lynkco09_Trunk_d.glb'
+  },
+  {
+    name: 'Tires',
+    path: '/data/lynkco09/model/Lynkco09_Tires_d.glb'
+  },
+  {
+    name: 'LBDoor',
+    path: '/data/lynkco09/model/Lynkco09_LBDoor_d.glb'
+  },
+  {
+    name: 'LFDoor',
+    path: '/data/lynkco09/model/Lynkco09_LFDoor_d.glb'
+  },
+  {
+    name: 'RFDoor',
+    path: '/data/lynkco09/model/Lynkco09_RFDoor_d.glb'
+  },
+  {
+    name: 'RBDoor',
+    path: '/data/lynkco09/model/Lynkco09_RBDoor_d.glb'
+  }
+]
+
+if (process.env.NODE_ENV === 'production') {
+  GLBs = [
+    {
+      name: 'EXT',
+      path: '/jpgs-shopfile/034608a7a8f64387a756d73b6e20cc07Lynkco09EXTd.glb'
+    },
+    {
+      name: 'INT',
+      path: '/jpgs-shopfile/79f141a2d6c341b38d177b06493bacb9Lynkco09INTd.glb'
+    },
+    {
+      name: 'Sunproof',
+      path: '/jpgs-shopfile/9b944270d00240f6977bb6200d38e3adLynkco09Sunproofd.glb'
+    },
+    {
+      name: 'Trunk',
+      path: '/jpgs-shopfile/db3ac3dc6cae42c4bd69c7fa022c1fa8Lynkco09Trunkd.glb'
+    },
+    {
+      name: 'Tires',
+      path: '/jpgs-shopfile/46aa48d737e34a56a2838857d9942b59Lynkco09Tiresd.glb'
+    },
+    {
+      name: 'LBDoor',
+      path: '/jpgs-shopfile/1c9ed195131c468c807fecc182500721Lynkco09LBDoord.glb'
+    },
+    {
+      name: 'LFDoor',
+      path: '/jpgs-shopfile/88e2e65e6f8547a6947412dd9abddfacLynkco09LFDoord.glb'
+    },
+    {
+      name: 'RFDoor',
+      path: '/jpgs-shopfile/bff3cd3a711442d9ab8bf9cd292ad2b1Lynkco09RFDoord.glb'
+    },
+    {
+      name: 'RBDoor',
+      path: '/jpgs-shopfile/530ce975fd594214ae3d7bbf6ba638c3Lynkco09RBDoord.glb'
+    }
+  ]
+}
+
 let controls = null
 let camera = null
 let scene = null
@@ -45,30 +125,6 @@ const Lynkco09 = () => {
   const refContainer = useRef()
   const [loading, setLoading] = useState(true)
   const refRenderer = useRef()
-  // const urlDogGLB = '/dog.glb'
-  let GLBUrls = [
-    '/data/lynkco09/Lynkco09_EXT_d.glb',
-    '/data/lynkco09/Lynkco09_INT_d.glb',
-    '/data/lynkco09/Lynkco09_Sunproof_d.glb',
-    '/data/lynkco09/Lynkco09_Trunk_d.glb',
-    '/data/lynkco09/Lynkco09_Tires_d.glb',
-    '/data/lynkco09/Lynkco09_LBDoor_d.glb',
-    '/data/lynkco09/Lynkco09_LFDoor_d.glb',
-    '/data/lynkco09/Lynkco09_RFDoor_d.glb',
-    '/data/lynkco09/Lynkco09_RBDoor_d.glb'
-  ]
-
-  // let GLBUrls = [
-  //   'https://oss01-zb01-hz-external.test.geely.com/jpgs-shopfile/034608a7a8f64387a756d73b6e20cc07Lynkco09EXTd.glb',
-  //   'https://oss01-zb01-hz-external.test.geely.com/jpgs-shopfile/79f141a2d6c341b38d177b06493bacb9Lynkco09INTd.glb',
-  //   'https://oss01-zb01-hz-external.test.geely.com/jpgs-shopfile/9b944270d00240f6977bb6200d38e3adLynkco09Sunproofd.glb',
-  //   'https://oss01-zb01-hz-external.test.geely.com/jpgs-shopfile/db3ac3dc6cae42c4bd69c7fa022c1fa8Lynkco09Trunkd.glb',
-  //   'https://oss01-zb01-hz-external.test.geely.com/jpgs-shopfile/46aa48d737e34a56a2838857d9942b59Lynkco09Tiresd.glb',
-  //   'https://oss01-zb01-hz-external.test.geely.com/jpgs-shopfile/1c9ed195131c468c807fecc182500721Lynkco09LBDoord.glb',
-  //   'https://oss01-zb01-hz-external.test.geely.com/jpgs-shopfile/88e2e65e6f8547a6947412dd9abddfacLynkco09LFDoord.glb',
-  //   'https://oss01-zb01-hz-external.test.geely.com/jpgs-shopfile/bff3cd3a711442d9ab8bf9cd292ad2b1Lynkco09RFDoord.glb',
-  //   'https://oss01-zb01-hz-external.test.geely.com/jpgs-shopfile/530ce975fd594214ae3d7bbf6ba638c3Lynkco09RBDoord.glb'
-  // ]
 
   const handleWindowResize = useCallback(() => {
     const { current: renderer } = refRenderer
@@ -257,7 +313,7 @@ const Lynkco09 = () => {
       scene.add(light9)
 
       Promise.all(
-        GLBUrls.map(item =>
+        GLBs.map(item =>
           loadGLTFModel(scene, item, {
             receiveShadow: false,
             castShadow: false
@@ -268,14 +324,6 @@ const Lynkco09 = () => {
         animate()
         setLoading(false)
       })
-
-      // loadGLTFModel(scene, urlDogGLB, {
-      //   receiveShadow: false,
-      //   castShadow: false
-      // }).then(() => {
-      //   animate()
-      //   setLoading(false)
-      // })
 
       let req = null
       let frame = 0
