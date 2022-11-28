@@ -48,39 +48,39 @@ if (process.env.NODE_ENV === 'production') {
   GLBs = [
     {
       name: 'EXT',
-      path: '/jpgs-shopfile/034608a7a8f64387a756d73b6e20cc07Lynkco09EXTd.glb'
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_EXT_d.glb'
     },
     {
       name: 'INT',
-      path: '/jpgs-shopfile/79f141a2d6c341b38d177b06493bacb9Lynkco09INTd.glb'
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_INT_d.glb'
     },
     {
       name: 'Sunproof',
-      path: '/jpgs-shopfile/9b944270d00240f6977bb6200d38e3adLynkco09Sunproofd.glb'
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_Sunproof_d.glb'
     },
     {
       name: 'Trunk',
-      path: '/jpgs-shopfile/db3ac3dc6cae42c4bd69c7fa022c1fa8Lynkco09Trunkd.glb'
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_Trunk_d.glb'
     },
     {
       name: 'Tires',
-      path: '/jpgs-shopfile/46aa48d737e34a56a2838857d9942b59Lynkco09Tiresd.glb'
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_Tires_d.glb'
     },
     {
       name: 'LBDoor',
-      path: '/jpgs-shopfile/1c9ed195131c468c807fecc182500721Lynkco09LBDoord.glb'
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_LBDoor_d.glb'
     },
     {
       name: 'LFDoor',
-      path: '/jpgs-shopfile/88e2e65e6f8547a6947412dd9abddfacLynkco09LFDoord.glb'
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_LFDoor_d.glb'
     },
     {
       name: 'RFDoor',
-      path: '/jpgs-shopfile/bff3cd3a711442d9ab8bf9cd292ad2b1Lynkco09RFDoord.glb'
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_RFDoor_d.glb'
     },
     {
       name: 'RBDoor',
-      path: '/jpgs-shopfile/530ce975fd594214ae3d7bbf6ba638c3Lynkco09RBDoord.glb'
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_RBDoor_d.glb'
     }
   ]
 }
