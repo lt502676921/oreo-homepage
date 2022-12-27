@@ -253,10 +253,15 @@ const Lynkco09 = () => {
 
       // const target = new THREE.Vector3(-0.5, 1.2, 0)
       const target = new THREE.Vector3(-0.5, 0.5, 0)
+      // const initialCameraPosition = new THREE.Vector3(
+      //   20 * Math.sin(0.2 * Math.PI),
+      //   10,
+      //   20 * Math.cos(0.2 * Math.PI)
+      // )
       const initialCameraPosition = new THREE.Vector3(
-        20 * Math.sin(0.2 * Math.PI),
-        10,
-        20 * Math.cos(0.2 * Math.PI)
+        5 * Math.sin(0.2 * Math.PI),
+        2.5,
+        5 * Math.cos(0.2 * Math.PI)
       )
 
       // 640 -> 240
@@ -336,7 +341,8 @@ const Lynkco09 = () => {
           const p = initialCameraPosition
           const rotSpeed = -easeOutCirc(frame / 120) * Math.PI * 20
 
-          camera.position.y = 10
+          // camera.position.y = 10
+          camera.position.y = 2.5
           camera.position.x =
             p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed)
           camera.position.z =
