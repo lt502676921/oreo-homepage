@@ -5,6 +5,10 @@ import NavBar from '../navbar'
 import Lynkco09Loader from '../lynkco09-loader'
 import Footer from '../footer'
 
+// const VConsole = dynamic(() => import('../vconsole'), {
+//   ssr: false
+// })
+
 const LazyCar = dynamic(() => import('../lynkco09'), {
   ssr: false,
   loading: () => <Lynkco09Loader />
@@ -27,6 +31,8 @@ const Main = ({ children, router }) => {
 
         <Footer />
       </Container>
+
+      {/* <VConsole /> */}
     </Box>
   )
 }

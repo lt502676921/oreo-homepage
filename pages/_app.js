@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion'
 import Layout from '../components/layouts/main'
 import Fonts from '../components/fonts'
 import theme from '../lib/theme'
+import Script from 'next/script'
 
 function Website({ Component, pageProps, router }) {
   return (
@@ -22,6 +23,12 @@ function Website({ Component, pageProps, router }) {
           <Component {...pageProps} key={router.route} />
         </AnimatePresence>
       </Layout>
+      {/* <Script
+        src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"
+        onLoad={() => {
+          const vConsole = new window.VConsole()
+        }}
+      /> */}
     </ChakraProvider>
   )
 }

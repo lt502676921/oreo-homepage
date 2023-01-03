@@ -317,16 +317,14 @@ const Lynkco09 = () => {
       light9.position.set(-5, 10, 0)
       scene.add(light9)
 
-      console.log('useEffect')
       Promise.all(
         GLBs.map(item =>
-          loadGLTFModel(scene, item, {
+          loadGLTFModel(scene, item, refRenderer, {
             receiveShadow: false,
             castShadow: false
           })
         )
       ).then(res => {
-        console.log('ressss', res)
         models = res
         animate()
         setLoading(false)
