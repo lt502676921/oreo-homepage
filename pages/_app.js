@@ -3,9 +3,16 @@ import { AnimatePresence } from 'framer-motion'
 import Layout from '../components/layouts/main'
 import Fonts from '../components/fonts'
 import theme from '../lib/theme'
-import Script from 'next/script'
+// import Script from 'next/script'
+// import { useEffect } from 'react'
 
 function Website({ Component, pageProps, router }) {
+  // useEffect(() => {
+  //   console.log(this === window)
+  //   const VConsole = require('vconsole')
+  //   new VConsole()
+  // }, [])
+
   return (
     <ChakraProvider theme={theme}>
       <Fonts />

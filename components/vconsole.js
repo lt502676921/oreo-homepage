@@ -1,7 +1,11 @@
-import vconsole from 'vconsole'
+import { useEffect } from 'react'
+// import vconsole from 'vconsole'
 
-function VConsole() {
-  const vConsole = process.env.NODE_ENV === 'development' ? new vconsole() : ''
+const VConsole = () => {
+  useEffect(() => {
+    const vconsole = require('vconsole')
+    process.env.NODE_ENV === 'development' && new vconsole()
+  }, [])
 
   return <></>
 }
