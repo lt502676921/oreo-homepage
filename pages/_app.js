@@ -8,7 +8,6 @@ import theme from '../lib/theme'
 
 function Website({ Component, pageProps, router }) {
   // useEffect(() => {
-  //   console.log(this === window)
   //   const VConsole = require('vconsole')
   //   new VConsole()
   // }, [])
