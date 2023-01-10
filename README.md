@@ -1,8 +1,6 @@
 # Oreo's Homepage
 
-http://oreo.nat300.top/
-
-
+http://oreo.ink/
 
 ## Stack
 
