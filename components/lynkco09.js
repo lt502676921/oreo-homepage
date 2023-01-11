@@ -44,46 +44,46 @@ let GLBs = [
   }
 ]
 
-// if (process.env.NODE_ENV === 'production') {
-//   GLBs = [
-//     {
-//       name: 'EXT',
-//       path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_EXT_d.glb'
-//     },
-//     {
-//       name: 'INT',
-//       path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_INT_d.glb'
-//     },
-//     {
-//       name: 'Sunproof',
-//       path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_Sunproof_d.glb'
-//     },
-//     {
-//       name: 'Trunk',
-//       path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_Trunk_d.glb'
-//     },
-//     {
-//       name: 'Tires',
-//       path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_Tires_d.glb'
-//     },
-//     {
-//       name: 'LBDoor',
-//       path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_LBDoor_d.glb'
-//     },
-//     {
-//       name: 'LFDoor',
-//       path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_LFDoor_d.glb'
-//     },
-//     {
-//       name: 'RFDoor',
-//       path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_RFDoor_d.glb'
-//     },
-//     {
-//       name: 'RBDoor',
-//       path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_RBDoor_d.glb'
-//     }
-//   ]
-// }
+if (process.env.NODE_ENV === 'production') {
+  GLBs = [
+    {
+      name: 'EXT',
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_EXT_d.glb'
+    },
+    {
+      name: 'INT',
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_INT_d.glb'
+    },
+    {
+      name: 'Sunproof',
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_Sunproof_d.glb'
+    },
+    {
+      name: 'Trunk',
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_Trunk_d.glb'
+    },
+    {
+      name: 'Tires',
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_Tires_d.glb'
+    },
+    {
+      name: 'LBDoor',
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_LBDoor_d.glb'
+    },
+    {
+      name: 'LFDoor',
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_LFDoor_d.glb'
+    },
+    {
+      name: 'RFDoor',
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_RFDoor_d.glb'
+    },
+    {
+      name: 'RBDoor',
+      path: 'https://jihaode-test.oss-cn-hangzhou.aliyuncs.com/common/model/lynkco09/Lynkco09_RBDoor_d.glb'
+    }
+  ]
+}
 
 let controls = null
 let camera = null
