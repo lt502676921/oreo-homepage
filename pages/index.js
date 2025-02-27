@@ -13,7 +13,7 @@ import { IoLogoGithub } from 'react-icons/io5'
 import Image from 'next/legacy/image'
 import Section from '../components/section'
 import Paragraph from '../components/paragraph'
-// import { BioSection, BioYear } from '../components/bio'
+import { BioSection, BioYear } from '../components/bio'
 import Layout from '../components/layouts/article'
 
 const ProfileImage = chakra(Image, {
@@ -74,13 +74,14 @@ const Page = () => {
             Work
           </Heading>
           <Paragraph>
-            Oreo is a front-end developer based in Hangzhou with a passion for
+            Oreo is a Front-end Developer based in Hangzhou with a passion for
             building digital services/stuff he wants. He is full of curiosity
             about all things launching products, from planning and designing all
-            the way to solving real-life problems with code. When not online, he
+            the way to solving real-life problems with code. 
+            {/* When not online, he
             loves hanging out with his &quot;Juliet&quot;. Currently, he is
             working at a Chinese Automobile Manufacturer called{' '}
-            <Link href="http://zgh.com/">Geely</Link>.
+            <Link href="http://zgh.com/">Geely</Link>. */}
           </Paragraph>
           <Box align="center" my={4}>
             <NextLink
@@ -99,7 +100,7 @@ const Page = () => {
           </Box>
         </Section>
 
-        {/* <Section delay={0.2}>
+        <Section delay={0.2}>
           <Heading as="h3" variant="section-title">
             Bio
           </Heading>
@@ -114,10 +115,18 @@ const Page = () => {
             Power
           </BioSection>
           <BioSection>
-            <BioYear>2021 to present</BioYear>
-            Working at Geely, Hangzhou
+            <BioYear>2021 to 2023</BioYear>
+            Working at <Link href="http://zgh.com/">Geely</Link>, Hangzhou
           </BioSection>
-        </Section> */}
+          <BioSection>
+            <BioYear>2023 to 2024</BioYear>
+            Working at <Link href="https://www.best-inc.com/#/">Best Inc</Link>, Hangzhou
+          </BioSection>
+          <BioSection>
+            <BioYear>2024 to present</BioYear>
+            Working at <Link href="https://www.alibabagroup.com/">Alibaba Group</Link>, Hangzhou
+          </BioSection>
+        </Section>
 
         <Section delay={0.3}>
           <Heading as="h3" variant="section-title">
