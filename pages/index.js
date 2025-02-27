@@ -59,7 +59,7 @@ const Page = () => {
               overflow="hidden"
             >
               <ProfileImage
-                src="/images/oreo.jpeg"
+                src="/images/oreo.jpg"
                 alt="Profile image"
                 borderRadius="full"
                 width="100%"
