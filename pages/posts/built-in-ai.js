@@ -5,7 +5,7 @@ import {
   Link,
   ListItem,
   UnorderedList,
-  OrderedList,
+  OrderedList
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import Layout from '../../components/layouts/article'
@@ -494,6 +494,13 @@ console.log(response);`}
         Rewriter API。 第三，三个全新的 API，可在flag中开启进行测试。
         它们分别是：支持图像输入的Prompt API、支持音频输入的Prompt API，以及
         Proofreader API。
+      </P>
+
+      <P>
+        请查看 Built-in AI 最新进展：{' '}
+        <NextLink href="https://developer.chrome.com/docs/ai/built-in">
+          <Link>https://developer.chrome.com/docs/ai/built-in</Link>
+        </NextLink>{' '}
       </P>
 
       <P style={{ margin: '8px 0 16px' }}>
