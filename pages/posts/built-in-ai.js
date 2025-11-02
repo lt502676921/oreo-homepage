@@ -3,19 +3,13 @@ import {
   Container,
   Badge,
   Link,
-  List,
   ListItem,
-  SimpleGrid,
   UnorderedList,
-  Image,
   OrderedList,
-  Code,
-  useColorModeValue
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import Layout from '../../components/layouts/article'
-import { ExternalLinkIcon } from '@chakra-ui/icons'
-import { Title, WorkImage, Meta, PostImage } from '../../components/post'
+import { Title, PostImage } from '../../components/post'
 import P from '../../components/paragraph'
 import CodeBlock from '../../components/code-block'
 
